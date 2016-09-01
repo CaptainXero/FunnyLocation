@@ -27,4 +27,10 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.1.1'
     testCompile 'junit:junit:4.12'
     provided files('lib/XposedBridgeApi-54.jar')
+    compile files('lib/baidumapapi_map_v4_0_0.jar')
+    compile files('lib/baidumapapi_base_v4_0_0.jar')
+    compile files('lib/baidumapapi_cloud_v4_0_0.jar')
+    compile files('lib/baidumapapi_radar_v4_0_0.jar')
+    compile files('lib/baidumapapi_search_v4_0_0.jar')
+    compile files('lib/baidumapapi_util_v4_0_0.jar')
 }
