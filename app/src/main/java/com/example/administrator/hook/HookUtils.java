@@ -34,7 +34,7 @@ import de.robv.android.xposed.XposedHelpers;
 
 
 public class HookUtils {
-    static void HookAndChange(ClassLoader classLoader, final double latitude, final double longtitude, final int lac, final int cid) {
+    public static void HookAndChange(ClassLoader classLoader, final double latitude, final double longtitude, final int lac, final int cid) {
 
 //        XposedHelpers.findAndHookMethod("android.telephony.TelephonyManager", classLoader,
 //                "getNetworkOperatorName", new XC_MethodHook() {
