@@ -10,25 +10,25 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DbHelper extends SQLiteOpenHelper {
 
-    private static final String DB_NAME = "laLong.db";
-    private static final int DB_VERSION = 1;
+    private final static String DB_NAME = "applist.db";
+    public final static String APP_TABLE_NAME = "app";
+    private final static int DB_VERSION = 1;
 
     public DbHelper(Context context) {
-        super(context,DB_NAME, null, DB_VERSION);
+        super(context, DB_NAME, null, DB_VERSION);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String CREATE_APP_TABLE = "create table Location ("
-                +"id integer primary key autoincrement,"
-                +"latitude double,"
-                +"longitude double)";
-        sqLiteDatabase.execSQL(CREATE_APP_TABLE);
-
+    public void onCreate(SQLiteDatabase db) {
+        String CREATE_APP_TABLE = "CREATE TABLE IF NOT EXISTS "
+                + APP_TABLE_NAME
+                + "(package_name TEXT PRIMARY KEY,"
+                + "latitude DOUBLE,longitude DOUBLE,lac Integer,cid Integer)";
+        db.execSQL(CREATE_APP_TABLE);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
 }
