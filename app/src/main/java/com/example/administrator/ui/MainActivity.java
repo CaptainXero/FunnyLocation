@@ -2,8 +2,10 @@ package com.example.administrator.ui;
 
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,21 +15,28 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapPoi;
+import com.baidu.mapapi.map.MapStatusUpdate;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 
 import com.example.administrator.hook.R;
 import com.example.administrator.utils.DbHelper;
 
 import java.lang.reflect.Field;
+
+import static android.R.attr.name;
 
 
 public class MainActivity extends AppCompatActivity implements BaiduMap.OnMapClickListener{
@@ -83,12 +92,10 @@ public class MainActivity extends AppCompatActivity implements BaiduMap.OnMapCli
     @Override
     public void onMapClick(LatLng latLng) {
         mBaidumap.clear();
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        markerOptions.draggable(true);
-        markerOptions.title("经度：" + latLng.longitude + ",纬度：" + latLng.latitude);
-//        mBaidumap.addMarker(markerOptions);
         this.latLng = latLng;
+        double latitude = latLng.latitude;
+        double longitude = latLng.longitude;
+        initOverLay(latitude, longitude);
     }
 
     @Override
@@ -109,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements BaiduMap.OnMapCli
                     Toast.makeText(this, "请点击地图选择一个地点！", Toast.LENGTH_SHORT).show();
                     return true;
                 }
-                new AlertDialog.Builder(MainActivity.this).setTitle("提示").setMessage("利用基站定位的应用（qq钉钉等）需填写基站信息")
+                new AlertDialog.Builder(MainActivity.this).setTitle("提示").setMessage("利用基站定位的应用（qq、钉钉等）需填写基站信息。更改定位地点请彻底关闭（包括后台进程）相关应用。")
                         .setPositiveButton("好的", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -127,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements BaiduMap.OnMapCli
                 break;
             case R.id.search:
                 //实现搜索位置功能
+                Toast.makeText(MainActivity.this,"功能开发中，敬请期待！",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.lac:
                 View view1 = getLayoutInflater().inflate(R.layout.dialog_lac_cid, null, false);
@@ -199,4 +207,17 @@ public class MainActivity extends AppCompatActivity implements BaiduMap.OnMapCli
         super.onResume();
         mapView.onResume();
     }
+    public void initOverLay(double latitude,double longitude){
+        //定义mark坐标点
+        LatLng ll = new LatLng(latitude,longitude);
+        //构建mark图标
+        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromResource(R.drawable.mark);
+        //构建MarkerOption,用于在地图上添加Marker
+        OverlayOptions options = new MarkerOptions().position(ll).icon(bitmapDescriptor);
+        //在地图上添加marker
+        mBaidumap.addOverlay(options);//添加当前分店信息图层
+        MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+        mBaidumap.setMapStatus(u);
+    }
+
 }

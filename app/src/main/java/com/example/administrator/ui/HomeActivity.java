@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.entity.AppInfo;
 import com.example.administrator.hook.BuildConfig;
@@ -62,7 +63,7 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.setting:
-
+                Toast.makeText(HomeActivity.this,"功能开发中",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.donate:
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.jianshu.com/p/fce51137a835")));
