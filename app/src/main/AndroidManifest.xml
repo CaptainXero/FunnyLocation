@@ -30,11 +30,8 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <application
-        android:name="com.example.administrator.utils.ContextUtils"
-        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
             android:name="xposedmodule"
@@ -49,7 +46,8 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="h14Fa9M74pgGxAe8UxEZha27TVo0fZ6i" />
 
-        <activity android:name="com.example.administrator.ui.MainActivity">
+        <activity android:name="com.example.administrator.ui.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name="com.example.administrator.ui.HomeActivity"
             android:label="@string/app_name"
